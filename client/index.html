@@ -5,10 +5,98 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <link rel="manifest" href="/manifest.json" />
+  <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+  <script>
+    let oid = 'paidaxing0071'
+    var OneSignal = window.OneSignal || [];
+    OneSignal.push(function() {
+      console.log(3)
+      OneSignal.init({
+        appId: "a94ae9a7-a951-4056-8116-db65b1447295",
+        notifyButton: {
+          enable: true,
+        },
+        allowLocalhostAsSecureOrigin: true,
+      });
+      OneSignal.setExternalUserId(oid);
+      OneSignal.showNativePrompt();
+      OneSignal.getExternalUserId().then(function(id){
+        console.log('持久化用戶标识:' + id)
+      })
+      OneSignal.getUserId().then(function(userId) {
+        console.log("OneSignal User ID:", userId);
+        // (Output) OneSignal User ID: 270a35cd-4dda-4b3f-b04e-41d7463a2316    
+      });
+    });
+
+  </script>
+  <script>
+    // navigator.serviceWorker.register('/OneSignalSDKWorker.js');
+    // const OneSignal = window.OneSignal || [];
+    // console.log(1)
+    // OneSignal.push(function() {
+    //   console.log(444)
+    //   OneSignal.init({
+    //     appId: "a94ae9a7-a951-4056-8116-db65b1447295",
+    //   })
+      // OneSignal.showNativePrompt();
+      // OneSignal.setDefaultNotificationUrl('https://www.2p.com')
+      // OneSignal.setDefaultTitle('2P | 和你一起玩')
+      // OneSignal.setExternalUserId('007');
+      // console.log(OneSignal.getExternalUserId())
+      // OneSignal.getUserId().then(function(userId) {
+      //   console.log("OneSignal User ID:", userId);
+      //   // (Output) OneSignal User ID: 270a35cd-4dda-4b3f-b04e-41d7463a2316    
+      // });
+
+
+    //});
+/*     OneSignal.push(["getNotificationPermission", function(permission) {
+        console.log("Site Notification Permission:", permission);
+        // (Output) Site Notification Permission: default
+    }]); */
+    
+  </script>
 </head>
 <body>
-  <input type="text" name="wkInput1" />
+    <button id="b1">test!</button>
+  <!-- <input type="text" name="wkInput1" />
   <button id="btn1">test!</button>
-  <script src="/src/index.js"></script>
+  <script src="/src/index.js"></script> -->
+  <script>
+    document.querySelector('#b1').addEventListener('click',()=> {
+      OneSignal.sendSelfNotification(
+        /* Title (defaults if unset) */
+        "派大星广播",
+        /* Message (defaults if unset) */
+        "这个消失只发给你一人,你的用户id是'paidaxing0071'", 
+        /* URL (defaults if unset) */
+        'https://example.com/?_osp=do_not_open',
+        /* Icon */
+        'https://i2.kknews.cc/SIG=2q82ot1/4026000203q3o4n065nr.jpg',
+        {
+          /* Additional data hash */
+          notificationType: 'news-feature'
+        }, 
+        [{ /* Buttons */
+          /* Choose any unique identifier for your button. The ID of the clicked button is passed to you so you can identify which button is clicked */
+          id: 'like-button',
+          /* The text the button should display. Supports emojis. */
+          text: '比心',
+          /* A valid publicly reachable URL to an icon. Keep this small because it's downloaded on each notification display. */
+          icon: 'http://i.imgur.com/N8SN8ZS.png',
+          /* The URL to open when this action button is clicked. See the sections below for special URLs that prevent opening any window. */
+          url: 'https://example.com/?_osp=do_not_open'
+        },
+        {
+          id: 'read-more-button',
+          text: '查看更多',
+          icon: 'http://i.imgur.com/MIxJp1L.png',
+          url: 'https://example.com/?_osp=do_not_open'
+        }]
+      );
+    })
+  </script>
 </body>
 </html>
